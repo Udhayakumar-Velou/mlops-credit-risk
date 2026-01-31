@@ -39,6 +39,8 @@ a unified dataset (`merged_data.csv`) used for model training.
 ---
 
 ## Project Structure
+
+```text
 mlops-credit-risk/
 ├── data/
 │   └── raw/
@@ -58,7 +60,7 @@ mlops-credit-risk/
 ├── pyproject.toml
 ├── uv.lock
 └── README.md
-
+```  
 ---
 
 ## How to Run (Checkpoint 1)
