@@ -8,16 +8,17 @@ The project emphasizes a structured and reproducible approach to machine learnin
 ---
 
 ## Task Definition
-The machine learning task is a **binary classification problem**.
+The primary task of this project is to develop a machine learning model that predicts the likelihood of loan default based on historical borrower and loan data. Using this prediction, applicants are classified into distinct credit risk categories to support informed lending decisions.
 
-**Objective:**  
-Predict whether a loan applicant will default (`default = True / False`) based on:
-- customer demographic information
-- loan-related attributes
-- credit bureau indicators
+The task includes:
 
-A baseline Logistic Regression model is trained to validate the complete ML
-pipeline and ensure reproducibility.
+Loading and preprocessing structured loan application data
+
+Training a baseline classification model for credit risk prediction
+
+Evaluating model performance using standard classification metrics
+
+Establishing a modular and reproducible project structure that can be extended for production use
 
 ---
 
