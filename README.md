@@ -1,4 +1,4 @@
-# CCredit Risk Modeling System for NBFC Loan Approvals
+# Credit Risk Modeling System for NBFC Loan Approvals
 
 ## Project Description
 This project implements an end-to-end Machine Learning pipeline for credit risk
