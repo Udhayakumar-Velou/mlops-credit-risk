@@ -1,13 +1,9 @@
 # Credit Risk Modeling System for NBFC Loan Approvals
 
 ## Project Description
-This project implements an end-to-end Machine Learning pipeline for credit risk
-prediction using MLOps best practices. The objective is to design a clean,
-reproducible, and well-structured ML system that covers data ingestion,
-preprocessing, baseline model training, and version control.
+This project focuses on building a machine learning–based credit risk modeling system for loan applicants at a Non-Banking Financial Company (NBFC). The system analyzes historical loan and applicant data to predict the probability of loan default and classify applicants into different credit risk categories.
 
-The project emphasizes engineering quality, reproducibility, and clarity over
-model complexity, in alignment with the goals of the MLOps course.
+The project emphasizes a structured and reproducible approach to machine learning development, including data loading, preprocessing, baseline model training, and clear project organization. The solution is designed to be modular and scalable, allowing future integration of advanced modeling, deployment, and monitoring components.
 
 ---
 
