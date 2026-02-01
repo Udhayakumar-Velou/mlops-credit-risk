@@ -77,17 +77,11 @@ This project was developed collaboratively by all team members, with shared
 responsibility across all stages of the MLOps pipeline. Roles are defined to
 reflect areas of focus rather than exclusive ownership.
 
-- **Udhayakumar Velou**  
-  Project coordination, MLOps pipeline design, data integration, and baseline
-  model implementation
+**Udhayakumar Velou** – Data preprocessing, feature preparation, and dataset handling
 
-- **Kishor Saravanan**  
-  Data understanding, feature analysis, preprocessing support, and model
-  validation
+**Bhavan Vasu** – Model development, baseline training, and evaluation
 
-- **Bhavan Vasu**  
-  Documentation, experimentation support, code review, and reproducibility
-  validation
+**Kishor Saravanan** – Project structure setup, environment management, and documentation
 
 ### Contribution Statement
 All team members contributed equally to:
