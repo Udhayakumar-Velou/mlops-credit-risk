@@ -18,7 +18,7 @@ Training a baseline classification model for credit risk prediction
 
 Evaluating model performance using standard classification metrics
 
-Establishing a modular and reproducible project structure that can be extended for production use
+Establishing a modular and reproducible project structure that can be extended for production use.
 
 ---
 
