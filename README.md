@@ -154,10 +154,10 @@ uv run python -m scripts.train_baseline
 
 This project was developed collaboratively by all team members. Roles indicate areas of focus rather than exclusive ownership.
 
-Udhayakumar Velou** – Data preprocessing and dataset handling
-Kishor Saravanan** – Model training and evaluation
-Bhavan Vasu** – Project structure and environment setup
-Siddiqui Kamran** – Testing support, experiment tracking, and documentation
+## Udhayakumar Velou** – Data preprocessing and dataset handling
+## Kishor Saravanan** – Model training and evaluation
+## Bhavan Vasu** – Project structure and environment setup
+## Siddiqui Kamran** – Testing support, experiment tracking, and documentation
 
 ---
 
