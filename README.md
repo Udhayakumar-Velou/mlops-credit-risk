@@ -26,9 +26,9 @@ Establishing a modular and reproducible project structure that can be extended f
 The project uses structured tabular datasets provided as CSV files for academic
 purposes:
 
-- `customers.csv` – customer demographic and employment information  
-- `loans.csv` – loan-level attributes and default labels  
-- `bureau_data.csv` – credit bureau indicators  
+- `customers.csv` – customer demographic and employment information
+- `loans.csv` – loan-level attributes and default labels
+- `bureau_data.csv` – credit bureau indicators
 
 The datasets are merged using a common customer identifier (`cust_id`) to create
 a unified dataset (`merged_data.csv`) used for model training.
@@ -57,7 +57,7 @@ mlops-credit-risk/
 ├── pyproject.toml
 ├── uv.lock
 └── README.md
-```  
+```
 ---
 
 ## How to Run (Checkpoint 1)
