@@ -13,3 +13,5 @@ dependencies = [
     "pytest-cov>=7.0.0",
     "scikit-learn>=1.6.1",
 ]
+[tool.pytest.ini_options]
+pythonpath = ["."]
