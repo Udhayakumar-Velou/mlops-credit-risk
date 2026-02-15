@@ -1,24 +1,32 @@
-from src.data.load_data import load_csv
-from src.features.preprocess import preprocess
+import mlflow
+import mlflow.sklearn
+
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
+from src.data.load_data import load_csv
+from src.features.preprocess import preprocess
+
 
 def main():
-    # Load data
-    df = load_csv("data/raw/merged_data.csv")
+    mlflow.set_experiment("credit-risk-baseline")
 
-    # Preprocess
-    X_train, X_test, y_train, y_test = preprocess(df, target="default")
+    with mlflow.start_run(run_name="logreg_v1"):
+        df = load_csv("data/raw/merged_data.csv")
+        X_train, X_test, y_train, y_test = preprocess(df, target="default")
 
-    # Train baseline model
-    model = LogisticRegression(max_iter=1000)
-    model.fit(X_train, y_train)
+        model = LogisticRegression(max_iter=1000)
+        model.fit(X_train, y_train)
 
-    # Evaluate
-    preds = model.predict(X_test)
-    acc = accuracy_score(y_test, preds)
-    print(f"Baseline Accuracy: {acc:.4f}")
+        preds = model.predict(X_test)
+        acc = accuracy_score(y_test, preds)
+
+        mlflow.log_param("model", "logistic_regression")
+        mlflow.log_metric("accuracy", acc)
+
+        mlflow.sklearn.log_model(model, "model")
+
+        print(f"Accuracy: {acc:.4f}")
 
 
 if __name__ == "__main__":
