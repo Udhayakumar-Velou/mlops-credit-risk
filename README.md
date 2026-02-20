@@ -1,37 +1,41 @@
 # Credit Risk Modeling System for NBFC Loan Approvals
 
 ## Project Description
-This project focuses on building a machine learning–based credit risk modeling system for loan applicants at a Non-Banking Financial Company (NBFC). The system analyzes historical loan and applicant data to predict the probability of loan default and classify applicants into different credit risk categories.
+This project builds a machine learning–based credit risk modeling system for loan applicants at a Non-Banking Financial Company (NBFC). The system analyzes historical loan and applicant data to predict the probability of loan default and classify applicants into credit risk categories.
 
-The project emphasizes a structured and reproducible approach to machine learning development, including data loading, preprocessing, baseline model training, and clear project organization. The solution is designed to be modular and scalable, allowing future integration of advanced modeling, deployment, and monitoring components.
+The project follows a structured MLOps workflow emphasizing reproducibility, experiment tracking, automated testing, and code quality. The solution is modular and scalable, allowing future integration of advanced modeling, deployment, and monitoring components.
 
 ---
 
 ## Task Definition
-The primary task of this project is to develop a machine learning model that predicts the likelihood of loan default based on historical borrower and loan data. Using this prediction, applicants are classified into distinct credit risk categories to support informed lending decisions.
+The objective is to develop a classification model that predicts loan default risk based on historical borrower and loan data. The model supports decision-making by categorizing applicants into risk segments.
 
-The task includes:
+The pipeline includes:
 
-Loading and preprocessing structured loan application data
-
-Training a baseline classification model for credit risk prediction
-
-Evaluating model performance using standard classification metrics
-
-Establishing a modular and reproducible project structure that can be extended for production use.
+- Data ingestion and dataset merging
+- Feature preprocessing
+- Baseline model training
+- Evaluation using classification metrics
+- Experiment tracking with MLflow
+- Automated testing with coverage validation
+- Code quality enforcement with pre-commit hooks
 
 ---
 
 ## Dataset Source
-The project uses structured tabular datasets provided as CSV files for academic
-purposes:
+The project uses structured tabular datasets provided for academic purposes:
 
-- `customers.csv` – customer demographic and employment information  
-- `loans.csv` – loan-level attributes and default labels  
-- `bureau_data.csv` – credit bureau indicators  
+- `customers.csv` – customer demographic and employment information
+- `loans.csv` – loan attributes and default labels
+- `bureau_data.csv` – credit bureau indicators
 
-The datasets are merged using a common customer identifier (`cust_id`) to create
-a unified dataset (`merged_data.csv`) used for model training.
+Datasets are merged using a shared customer identifier (`cust_id`) into a unified dataset:
+
+```
+merged_data.csv
+```
+
+This dataset is used for training and evaluation.
 
 ---
 
@@ -54,40 +58,117 @@ mlops-credit-risk/
 │   ├── merge_data.py
 │   └── train_baseline.py
 ├── tests/
+├── .pre-commit-config.yaml
 ├── pyproject.toml
 ├── uv.lock
 └── README.md
-```  
+```
+
 ---
 
-## How to Run (Checkpoint 1)
+## Code Quality & Testing (Checkpoint 2)
 
-### 1. Install dependencies
+This project enforces software engineering best practices:
 
-uv sync
+- **Pre-commit hooks** for automated formatting and linting
+- **Black** for code formatting
+- **Flake8** for style checking
+- **Pytest** for unit testing
+- **Pytest-cov** for coverage reporting
 
-uv run python -m scripts.merge_data
+Current unit test coverage: **100%**
 
+Run tests:
+
+```bash
+uv run pytest
+```
+
+Run coverage report:
+
+```bash
+uv run pytest --cov=src --cov-report=term
+```
+
+---
+
+## Experiment Tracking with MLflow
+
+Model experiments are tracked using MLflow.
+
+Each training run logs:
+
+- model parameters
+- accuracy metrics
+- trained model artifacts
+
+Run training:
+
+```bash
 uv run python -m scripts.train_baseline
+```
+
+Launch MLflow UI:
+
+```bash
+uv run mlflow ui
+```
+
+Open in browser:
+
+```
+http://127.0.0.1:5000
+```
+
+Experiments appear under:
+
+```
+credit-risk-baseline
+```
+
+---
+
+## How to Run the Pipeline
+
+Install dependencies:
+
+```bash
+uv sync
+```
+
+Merge datasets:
+
+```bash
+uv run python -m scripts.merge_data
+```
+
+Train baseline model:
+
+```bash
+uv run python -m scripts.train_baseline
+```
+
+---
 
 ## Team Members & Roles
 
+This project was developed collaboratively by all team members. Roles indicate areas of focus rather than exclusive ownership.
 
-This project was developed collaboratively by all team members, with shared
-responsibility across all stages of the MLOps pipeline. Roles are defined to
-reflect areas of focus rather than exclusive ownership.
+**Udhayakumar Velou** – Data preprocessing and dataset handling
+**Bhavan Vasu** – Project structure and environment setup
+**Kishor Saravanan** – Model training and evaluation
+**Siddiqui Kamran** – Testing support, experiment tracking, and documentation
 
-**Udhayakumar Velou** – Data preprocessing, feature preparation, and dataset handling
+---
 
-**Bhavan Vasu** – Model development, baseline training, and evaluation
+## Contribution Statement
 
-**Kishor Saravanan** – Project structure setup, environment management, and documentation
-
-### Contribution Statement
 All team members contributed equally to:
-- defining the machine learning task
-- designing the project structure
-- implementing data ingestion and preprocessing
-- developing and validating the baseline model
-- version control and GitHub collaboration
-- project documentation
+
+- task definition and design
+- dataset ingestion and preprocessing
+- baseline model implementation
+- automated testing
+- MLflow experiment tracking
+- version control collaboration
+- documentation
