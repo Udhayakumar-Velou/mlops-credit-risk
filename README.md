@@ -10,15 +10,15 @@ The project follows a structured MLOps workflow emphasizing reproducibility, exp
 ## Task Definition
 The objective is to develop a classification model that predicts loan default risk based on historical borrower and loan data. The model supports decision-making by categorizing applicants into risk segments.
 
-The pipeline includes:
+The task includes:
 
-- Data ingestion and dataset merging
-- Feature preprocessing
-- Baseline model training
-- Evaluation using classification metrics
-- Experiment tracking with MLflow
-- Automated testing with coverage validation
-- Code quality enforcement with pre-commit hooks
+Loading and preprocessing structured loan application data
+
+Training a baseline classification model for credit risk prediction
+
+Evaluating model performance using standard classification metrics
+
+Establishing a modular and reproducible project structure that can be extended for production use
 
 ---
 
