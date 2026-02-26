@@ -1,3 +1,9 @@
+import mlflow
+import mlflow.sklearn
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score, precision_score, recall_score
+
 from src.data.load_data import load_csv
 from src.features.preprocess import preprocess
 from sklearn.linear_model import LogisticRegression
