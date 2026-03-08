@@ -7,16 +7,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: uv sync
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.9"
 
-    - name: Run tests
-      run: pytest
+      - name: Install uv
+        run: pip install uv
 
-    - name: Run flake8
-      run: flake8 src api scripts tests
+      - name: Install dependencies
+        run: uv sync
 
-    - name: Run black
-      run: black --check .
+      - name: Run tests
+        run: uv run pytest
+
+      - name: Run flake8
+        run: uv run flake8 src api scripts tests
+
+      - name: Run black
+        run: uv run black --check .
