@@ -1,21 +1,21 @@
-# Python virtual environment
+# Virtual environment
 .venv/
- 
+
 # Python cache
 __pycache__/
 *.pyc
- 
+
 # OS files
 .DS_Store
- 
+
 # MLflow tracking
 mlruns/
- 
+
 # Coverage
 .coverage
- 
+
 # Model artifacts
 # artifacts/
- 
+
 # Logs
 *.log

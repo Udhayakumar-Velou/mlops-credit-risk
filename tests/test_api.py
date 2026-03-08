@@ -11,6 +11,7 @@ class DummyModel:
 @pytest.fixture(autouse=True)
 def mock_model():
     from api import main
+
     main.model = DummyModel()
 
 
@@ -44,7 +45,7 @@ def test_prediction_endpoint():
         "delinquent_months": 0,
         "total_dpd": 0,
         "enquiry_count": 1,
-        "credit_utilization_ratio": 0.35
+        "credit_utilization_ratio": 0.35,
     }
 
     response = client.post("/predict", json=payload)

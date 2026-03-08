@@ -11,6 +11,4 @@ def preprocess(df, target: str):
     # Keep only numeric features
     X = X.select_dtypes(include=["number"])
 
-    return train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
+    return train_test_split(X, y, test_size=0.2, random_state=42)
