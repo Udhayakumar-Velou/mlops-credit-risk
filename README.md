@@ -4,15 +4,15 @@
 
 This project implements an end-to-end credit risk prediction system for a Non-Banking Financial Company (NBFC). The objective is to predict whether a loan applicant is likely to default using structured borrower and loan data.
 
-The system follows modern MLOps best practices, including:
+The project follows modern **MLOps best practices**, including:
 
-- Modular project structure
-- Reproducible environment management using UV
-- Automated testing with Pytest
-- Experiment tracking using MLflow
-- Model serving using FastAPI
-- Containerization using Docker
-- Continuous Integration using GitHub Actions
+- Modular project structure  
+- Reproducible environment management using UV  
+- Automated testing with Pytest  
+- Experiment tracking with MLflow  
+- Model serving using FastAPI  
+- Containerization using Docker  
+- Continuous Integration using GitHub Actions  
 
 ---
 
@@ -20,12 +20,12 @@ The system follows modern MLOps best practices, including:
 
 Loan approval decisions require evaluating whether a borrower is likely to repay a loan.
 
-This project models the problem as a binary classification task:
+This project models the problem as a **binary classification task**:
 
-- default = 1 → borrower likely to default
-- default = 0 → borrower unlikely to default
+- `default = 1` → borrower likely to default  
+- `default = 0` → borrower unlikely to default  
 
-The trained model supports data-driven loan approval decisions.
+The trained model supports **data-driven loan approval decisions**.
 
 ---
 
@@ -33,23 +33,26 @@ The trained model supports data-driven loan approval decisions.
 
 The project uses structured tabular datasets:
 
-- customers.csv – customer demographic and employment information
-- loans.csv – loan attributes and default labels
-- bureau_data.csv – credit bureau indicators
+- **customers.csv** – customer demographic and employment information  
+- **loans.csv** – loan attributes and default labels  
+- **bureau_data.csv** – credit bureau indicators  
 
-These datasets are merged using the common identifier:
+These datasets are merged using the identifier:
 
+```
 cust_id
+```
 
-The final training dataset becomes:
+The final dataset used for training is:
 
+```
 merged_data.csv
-
-This dataset is used for model training and evaluation.
+```
 
 ---
 
 ## Project Structure
+
 ```
 mlops-credit-risk/
 │
@@ -64,13 +67,18 @@ mlops-credit-risk/
 │
 ├── src/
 │   ├── data/
+│   │   └── load_data.py
 │   └── features/
+│       └── preprocess.py
 │
 ├── scripts/
 │   ├── merge_data.py
 │   └── train_baseline.py
 │
 ├── tests/
+│   ├── test_api.py
+│   ├── test_data.py
+│   └── test_preprocess.py
 │
 ├── .github/
 │   └── workflows/
@@ -84,73 +92,99 @@ mlops-credit-risk/
 
 ---
 
-## Checkpoint 1 — Project Foundations
+## System Architecture
 
-- UV environment setup
-- Modular project structure
-- Dataset merging pipeline
-- Baseline model training
-- Initial documentation
+The system follows a modular MLOps architecture separating data processing, model training, experiment tracking, and model serving.
+
+First, raw datasets are merged using the pipeline implemented in `merge_data.py`. The merged dataset is then processed through preprocessing functions in the `src` module to prepare the features for model training.
+
+The baseline machine learning model is trained using `train_baseline.py`. During training, **MLflow** is used to track experiment parameters, metrics, and model artifacts.
+
+The trained model is saved as `model.pkl` in the `artifacts` directory. This model is then loaded by a **FastAPI inference service**, which exposes REST endpoints for predictions.
+
+The API is containerized using **Docker**, allowing the application to run consistently across different environments.
+
+A **GitHub Actions CI pipeline** ensures code quality by automatically running tests and linting checks whenever code changes are pushed to the repository.
 
 ---
 
-## Checkpoint 2 — Code Quality & Experiment Tracking
+## MLOps Practices Applied
 
-The project integrates:
+This project demonstrates several key MLOps practices:
 
-- Pre-commit hooks
-- Black for formatting
-- Flake8 for linting
-- Pytest for testing
-- Pytest-cov for coverage
-- MLflow for experiment tracking
+- Reproducible dependency management using UV  
+- Modular project architecture  
+- Experiment tracking with MLflow  
+- Automated testing with Pytest  
+- Code quality checks using Flake8 and Black  
+- API-based model serving with FastAPI  
+- Containerized deployment with Docker  
+- Continuous Integration using GitHub Actions  
 
-Run tests:
+---
 
-uv run pytest
+## Running the Project
 
-Run coverage:
+### 1. Clone the repository
 
-uv run pytest --cov=src --cov=api --cov-report=term
+```
+git clone https://github.com/Udhayakumar-Velou/mlops-credit-risk.git
+cd mlops-credit-risk
+```
 
-Train model:
+### 2. Create environment and install dependencies
 
+```
+uv sync
+```
+
+### 3. Train the model
+
+```
 uv run python -m scripts.train_baseline
+```
 
-Launch MLflow UI:
+### 4. Run the API
 
-uv run mlflow ui
+```
+uv run uvicorn api.main:app --reload
+```
 
-Open:
+Open the API documentation:
 
-http://127.0.0.1:5000
-
-Experiment name:
-
-credit-risk-baseline
+```
+http://localhost:8000/docs
+```
 
 ---
 
-## Checkpoint 3 — Model Serving & Containerization
+## FastAPI Endpoints
 
-### FastAPI Inference Service
+### Health Check
 
-Health endpoint:
-
+```
 GET /health
+```
 
 Response:
 
+```
 {
   "status": "API is running"
 }
+```
 
-Prediction endpoint:
+---
 
+### Prediction Endpoint
+
+```
 POST /predict
+```
 
-Example request:
+Example Request:
 
+```
 {
   "sanction_amount": 50000,
   "loan_amount": 45000,
@@ -173,88 +207,82 @@ Example request:
   "enquiry_count": 1,
   "credit_utilization_ratio": 0.35
 }
+```
 
-Example response:
+Example Response:
 
+```
 {
   "prediction": 0
 }
+```
 
 ---
 
 ## Docker Deployment
 
-Build Docker image:
+Build the Docker image:
 
+```
 docker build -t credit-risk-api .
+```
 
-Run Docker container:
+Run the container:
 
+```
 docker run -p 8000:8000 credit-risk-api
+```
 
-API documentation:
+Access API documentation:
 
+```
 http://localhost:8000/docs
+```
 
 ---
 
-## Continuous Integration (CI)
+## Continuous Integration
 
-The project includes a GitHub Actions CI pipeline that automatically runs whenever code is pushed or a pull request is created.
+The project uses **GitHub Actions** for Continuous Integration. The CI pipeline automatically runs whenever code is pushed or a pull request is created.
 
-The pipeline performs:
+The pipeline performs the following checks:
 
-- Dependency installation
-- Automated testing using Pytest
-- Code linting using Flake8
-- Code formatting validation using Black
+- Dependency installation  
+- Automated testing using Pytest  
+- Code linting using Flake8  
+- Code formatting validation using Black  
 
 This ensures consistent code quality and prevents broken code from being merged into the main branch.
 
 ---
 
-## Monitoring Strategy
+## Monitoring & Reliability
 
-Basic monitoring is implemented through logging and health checks.
+Basic monitoring is implemented through application logging and health checks.
 
-The API logs important events such as:
+The FastAPI service logs important events such as:
 
-- model loading
-- prediction requests
-- prediction outputs
-- runtime errors
+- model loading  
+- prediction requests  
+- prediction outputs  
+- runtime errors  
 
 The `/health` endpoint allows external systems to verify that the API service is running.
 
-In a production environment, monitoring could be extended using tools such as Prometheus and Grafana to track API performance, error rates, and model prediction patterns.
+In production environments, monitoring could be extended using tools such as **Prometheus** and **Grafana** to track API performance, request latency, error rates, and model prediction distributions.
 
 ---
 
-## Future Work
+## Limitations & Future Work
 
-Several improvements could extend this system:
+Although the system demonstrates a complete MLOps workflow, several improvements could enhance the project:
 
-- Training more advanced models such as Random Forest or XGBoost
-- Implementing automated model retraining pipelines
-- Deploying the system to cloud platforms such as AWS or Azure
-- Implementing model drift detection
-- Adding a dashboard interface for loan officers
-- Implementing a full CD (Continuous Deployment) pipeline
-
----
-
-## MLOps Practices Applied
-
-This project demonstrates several important MLOps practices:
-
-- Reproducible dependency management using UV
-- Modular project architecture
-- Experiment tracking using MLflow
-- Automated testing using Pytest
-- Code quality enforcement using Flake8 and Black
-- Containerized deployment using Docker
-- Continuous Integration using GitHub Actions
-- Logging for monitoring and debugging
+- evaluating more advanced models such as Random Forest or XGBoost  
+- implementing automated model retraining pipelines  
+- deploying the system to cloud platforms such as AWS or Azure  
+- implementing model drift detection  
+- adding a user interface dashboard for loan officers  
+- implementing a full Continuous Deployment pipeline  
 
 ---
 
@@ -263,7 +291,7 @@ This project demonstrates several important MLOps practices:
 Udhayakumar Velou – Data preprocessing and API development  
 Bhavan Vasu – Environment setup and project structure  
 Kishor Saravanan – Model training and evaluation  
-Siddiqui Kamran – Testing, experiment tracking, and documentation
+Siddiqui Kamran – Testing, experiment tracking, and documentation  
 
 ---
 
@@ -271,10 +299,10 @@ Siddiqui Kamran – Testing, experiment tracking, and documentation
 
 All team members contributed collaboratively to:
 
-- project design and task planning
-- dataset ingestion and preprocessing
-- baseline model implementation
-- automated testing
-- experiment tracking using MLflow
-- version control collaboration
-- documentation and final reporting
+- project design and task planning  
+- dataset ingestion and preprocessing  
+- baseline model implementation  
+- automated testing  
+- experiment tracking using MLflow  
+- version control collaboration  
+- documentation and final reporting  
