@@ -50,7 +50,7 @@ This dataset is used for model training and evaluation.
 ---
 
 ## Project Structure
-
+```
 mlops-credit-risk/
 │
 ├── api/
@@ -80,6 +80,7 @@ mlops-credit-risk/
 ├── pyproject.toml
 ├── uv.lock
 └── README.md
+```
 
 ---
 
