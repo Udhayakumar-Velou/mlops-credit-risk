@@ -2,25 +2,28 @@
 
 ## Project Overview
 
-This project implements an end-to-end **credit risk prediction system** for a Non-Banking Financial Company (NBFC). The objective is to predict whether a loan applicant is likely to default using structured borrower and loan data.
+This project implements an end-to-end credit risk prediction system for a Non-Banking Financial Company (NBFC). The objective is to predict whether a loan applicant is likely to default using structured borrower and loan data.
 
-The project follows modern **MLOps best practices**, including:
+The system follows modern MLOps best practices, including:
 
-- Modular project structure  
-- Reproducible environment management using UV  
-- Automated testing with Pytest  
-- Experiment tracking with MLflow  
-- Model serving using FastAPI  
-- Containerization using Docker  
+- Modular project structure
+- Reproducible environment management using UV
+- Automated testing with Pytest
+- Experiment tracking using MLflow
+- Model serving using FastAPI
+- Containerization using Docker
+- Continuous Integration using GitHub Actions
 
 ---
 
 ## Problem Definition
 
-This is a **binary classification problem**:
+Loan approval decisions require evaluating whether a borrower is likely to repay a loan.
 
-- `default = 1` → Loan likely to default  
-- `default = 0` → Loan unlikely to default  
+This project models the problem as a binary classification task:
+
+- default = 1 → borrower likely to default
+- default = 0 → borrower unlikely to default
 
 The trained model supports data-driven loan approval decisions.
 
@@ -30,133 +33,123 @@ The trained model supports data-driven loan approval decisions.
 
 The project uses structured tabular datasets:
 
-- **customers.csv** – customer demographic and employment information  
-- **loans.csv** – loan attributes and default labels  
-- **bureau_data.csv** – credit bureau indicators  
+- customers.csv – customer demographic and employment information
+- loans.csv – loan attributes and default labels
+- bureau_data.csv – credit bureau indicators
 
-These datasets are merged using `cust_id` into:
+These datasets are merged using the common identifier:
 
-```
+cust_id
+
+The final training dataset becomes:
+
 merged_data.csv
-```
 
-This dataset is used for training and evaluation.
+This dataset is used for model training and evaluation.
 
 ---
 
 ## Project Structure
 
-```
 mlops-credit-risk/
+│
 ├── api/
 │   └── main.py
+│
 ├── artifacts/
 │   └── model.pkl
+│
 ├── data/
 │   └── raw/
+│
 ├── src/
 │   ├── data/
 │   └── features/
+│
 ├── scripts/
 │   ├── merge_data.py
 │   └── train_baseline.py
+│
 ├── tests/
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+│
 ├── Dockerfile
 ├── pyproject.toml
 ├── uv.lock
 └── README.md
-```
 
 ---
 
-# Checkpoint 1 – Project Foundations
+## Checkpoint 1 — Project Foundations
 
-- UV environment setup  
-- Modular project structure  
-- Dataset merging pipeline  
-- Baseline model training  
-- Initial documentation  
+- UV environment setup
+- Modular project structure
+- Dataset merging pipeline
+- Baseline model training
+- Initial documentation
 
 ---
 
-# Checkpoint 2 – Code Quality & Experiment Tracking
+## Checkpoint 2 — Code Quality & Experiment Tracking
 
 The project integrates:
 
-- Pre-commit hooks  
-- Black for formatting  
-- Flake8 for linting  
-- Pytest for testing  
-- Pytest-cov for coverage  
-- MLflow for experiment tracking  
+- Pre-commit hooks
+- Black for formatting
+- Flake8 for linting
+- Pytest for testing
+- Pytest-cov for coverage
+- MLflow for experiment tracking
 
-### Run Tests
+Run tests:
 
-```bash
 uv run pytest
-```
 
-### Run Coverage
+Run coverage:
 
-```bash
 uv run pytest --cov=src --cov=api --cov-report=term
-```
 
-### Train Model
+Train model:
 
-```bash
 uv run python -m scripts.train_baseline
-```
 
-### Launch MLflow UI
+Launch MLflow UI:
 
-```bash
 uv run mlflow ui
-```
 
 Open:
 
-```
 http://127.0.0.1:5000
-```
 
 Experiment name:
 
-```
 credit-risk-baseline
-```
 
 ---
 
-# Checkpoint 3 – Model Serving & Containerization
+## Checkpoint 3 — Model Serving & Containerization
 
-## FastAPI Inference Service
+### FastAPI Inference Service
 
-### Health Endpoint
+Health endpoint:
 
-```
-GET /
-```
+GET /health
 
 Response:
 
-```json
 {
   "status": "API is running"
 }
-```
 
----
+Prediction endpoint:
 
-### Prediction Endpoint
-
-```
 POST /predict
-```
 
-### Example Request
+Example request:
 
-```json
 {
   "sanction_amount": 50000,
   "loan_amount": 45000,
@@ -179,60 +172,88 @@ POST /predict
   "enquiry_count": 1,
   "credit_utilization_ratio": 0.35
 }
-```
 
-### Example Response
+Example response:
 
-```json
 {
   "prediction": 0
 }
-```
 
 ---
 
 ## Docker Deployment
 
-### Build Docker Image
+Build Docker image:
 
-```bash
 docker build -t credit-risk-api .
-```
 
-### Run Docker Container
+Run Docker container:
 
-```bash
 docker run -p 8000:8000 credit-risk-api
-```
 
-Access API documentation:
+API documentation:
 
-```
 http://localhost:8000/docs
-```
 
 ---
 
-## Monitoring & Logging
+## Continuous Integration (CI)
 
-The system includes:
+The project includes a GitHub Actions CI pipeline that automatically runs whenever code is pushed or a pull request is created.
 
-- Model load logging  
-- Request logging  
-- Prediction logging  
-- Error handling and logging  
+The pipeline performs:
+
+- Dependency installation
+- Automated testing using Pytest
+- Code linting using Flake8
+- Code formatting validation using Black
+
+This ensures consistent code quality and prevents broken code from being merged into the main branch.
 
 ---
 
-# MLOps Practices Applied
+## Monitoring Strategy
 
-- Reproducible dependency management (UV)  
-- Modular architecture  
-- Experiment tracking (MLflow)  
-- Automated testing  
-- API-based deployment  
-- Docker containerization  
-- Logging for monitoring  
+Basic monitoring is implemented through logging and health checks.
+
+The API logs important events such as:
+
+- model loading
+- prediction requests
+- prediction outputs
+- runtime errors
+
+The `/health` endpoint allows external systems to verify that the API service is running.
+
+In a production environment, monitoring could be extended using tools such as Prometheus and Grafana to track API performance, error rates, and model prediction patterns.
+
+---
+
+## Future Work
+
+Several improvements could extend this system:
+
+- Training more advanced models such as Random Forest or XGBoost
+- Implementing automated model retraining pipelines
+- Deploying the system to cloud platforms such as AWS or Azure
+- Implementing model drift detection
+- Adding a dashboard interface for loan officers
+- Implementing a full CD (Continuous Deployment) pipeline
+
+---
+
+## MLOps Practices Applied
+
+This project demonstrates several important MLOps practices:
+
+- Reproducible dependency management using UV
+- Modular project architecture
+- Experiment tracking using MLflow
+- Automated testing using Pytest
+- Code quality enforcement using Flake8 and Black
+- Containerized deployment using Docker
+- Continuous Integration using GitHub Actions
+- Logging for monitoring and debugging
 
 ---
 
@@ -241,18 +262,18 @@ The system includes:
 Udhayakumar Velou – Data preprocessing and API development  
 Bhavan Vasu – Environment setup and project structure  
 Kishor Saravanan – Model training and evaluation  
-Siddiqui Kamran – Testing, experiment tracking, documentation  
+Siddiqui Kamran – Testing, experiment tracking, and documentation
 
 ---
 
 ## Contribution Statement
 
-All team members contributed equally to:
+All team members contributed collaboratively to:
 
-- task definition and design
+- project design and task planning
 - dataset ingestion and preprocessing
 - baseline model implementation
 - automated testing
-- MLflow experiment tracking
+- experiment tracking using MLflow
 - version control collaboration
-- documentation
+- documentation and final reporting
