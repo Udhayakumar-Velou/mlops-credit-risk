@@ -146,3 +146,4 @@ def predict(data: PredictionRequest):
     except Exception as e:
         logger.error(f"Prediction failed: {e}")
         raise e
+    

@@ -11,7 +11,6 @@ class DummyModel:
 @pytest.fixture(autouse=True)
 def mock_model():
     from api import main
-
     main.model = DummyModel()
 
 
@@ -19,7 +18,7 @@ client = TestClient(app)
 
 
 def test_health():
-    response = client.get("/")
+    response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "API is running"}
 
@@ -52,3 +51,4 @@ def test_prediction_endpoint():
 
     assert response.status_code == 200
     assert "prediction" in response.json()
+    
