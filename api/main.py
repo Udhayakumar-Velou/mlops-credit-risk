@@ -8,8 +8,7 @@ import logging
 # Logging Configuration
 # -----------------------------
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
 logger = logging.getLogger(__name__)
@@ -19,15 +18,14 @@ logger = logging.getLogger(__name__)
 # -----------------------------
 app = FastAPI(
     title="Credit Risk Prediction API",
-    description="""
-This API provides a machine learning service to predict whether a loan applicant
-is a **credit risk**.
-
-Features:
-- Health check endpoint
-- Credit risk prediction endpoint
-- Model served using FastAPI
-""",
+    description=(
+        "This API provides a machine learning service to predict whether "
+        "a loan applicant is a credit risk.\n\n"
+        "Features:\n"
+        "- Health check endpoint\n"
+        "- Credit risk prediction endpoint\n"
+        "- Model served using FastAPI"
+    ),
     version="1.0.0",
 )
 
@@ -55,7 +53,7 @@ def load_model():
     "/health",
     summary="Health Check",
     description="Check if the API service is running.",
-    tags=["System"]
+    tags=["System"],
 )
 def health():
     return {"status": "API is running"}
@@ -108,7 +106,7 @@ class PredictionRequest(BaseModel):
                 "delinquent_months": 0,
                 "total_dpd": 0,
                 "enquiry_count": 1,
-                "credit_utilization_ratio": 0.3
+                "credit_utilization_ratio": 0.3,
             }
         }
 
@@ -128,7 +126,7 @@ class PredictionResponse(BaseModel):
     response_model=PredictionResponse,
     summary="Predict Credit Risk",
     description="Predict whether the applicant represents a credit risk.",
-    tags=["Prediction"]
+    tags=["Prediction"],
 )
 def predict(data: PredictionRequest):
     try:
@@ -146,4 +144,3 @@ def predict(data: PredictionRequest):
     except Exception as e:
         logger.error(f"Prediction failed: {e}")
         raise e
-    
