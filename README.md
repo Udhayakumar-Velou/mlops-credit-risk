@@ -16,6 +16,22 @@ The project follows modern **MLOps best practices**, including:
 
 ---
 
+## 🎥 Project Demonstration Video
+
+A full demonstration of the system including the CI pipeline, model training, MLflow tracking, FastAPI inference, and Docker deployment can be viewed here:
+
+Demo Video Link:  
+[Watch the Demo Video](https://drive.google.com/file/d/1dn9jMCYCtilEjLjYG8mIhi79VjJBPvzP/view?usp=sharing)
+
+The video demonstrates:
+- Automatic CI pipeline execution
+- Model training and experiment tracking with MLflow
+- FastAPI model serving
+- Prediction endpoint usage
+- Docker container deployment
+
+---
+
 ## Problem Definition
 
 Loan approval decisions require evaluating whether a borrower is likely to repay a loan.
